@@ -16,7 +16,11 @@ import yfinance as yf
 import numpy as np
 import matplotlib.pyplot as plt
 import copy
+from pathlib import Path
 
+chartPath = Path('charts')
+if not chartPath.exists():
+    Path(r'charts').mkdir()
 
 stockList = ['ADBE', 'CRCL', 'HUM', 'AAPL', 'MSFT']
 stockData = {}
@@ -34,7 +38,11 @@ for stock in stockList:
     newList.sort()
 
     plt.plot(stocksArray)
-    plt.axis((0, 10, newList[0]-10, newList[-1]+10))
+    plt.title(stock)
+    plt.axis((0, 9, newList[0]-10, newList[-1]+10))
     plt.xlabel('Last 10 Trading Days')
     plt.ylabel('Closing Price')
-    plt.show()
+    plt.savefig(f'{chartPath}/{stock}.png')
+    print(f'The plot {stock} has been saved.')
+
+print("All plots are saved.")
