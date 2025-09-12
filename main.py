@@ -15,8 +15,16 @@
 import yfinance as yf
 import numpy as np
 import matplotlib.pyplot as plt
+import pprint
 
 stockList = ['GME', 'CWD', 'HUM', 'AAPL', 'MSFT']
 stockData = {}
 
-
+for stock in stockList:
+    dat = yf.Ticker(stock)
+    last10 = dat.history(period='10d')
+    stockData[stock] = []
+    for price in last10['Close']:
+        stockData[stock].append(price)
+    stocksArray = np.array(stockData[stock])
+    pprint.pprint(stocksArray)
